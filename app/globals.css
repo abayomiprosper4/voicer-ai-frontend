@@ -1,26 +1,132 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 187 71% 97%;
+    --foreground: 213 21% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 213 21% 16%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 21% 16%;
+
+    --primary: 189 82% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --primary-glow: 189 54% 32%;
+
+    --secondary: 187 71% 94%;
+    --secondary-foreground: 213 21% 16%;
+
+    --muted: 187 50% 95%;
+    --muted-foreground: 213 12% 40%;
+
+    --accent: 189 54% 32%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 189 30% 85%;
+    --input: 189 30% 88%;
+    --ring: 189 82% 35%;
+
+    --radius: 1rem;
+
+    --gradient-hero: linear-gradient(135deg, hsl(189 82% 35%) 0%, hsl(189 54% 32%) 50%, hsl(213 21% 16%) 100%);
+    --gradient-soft: linear-gradient(180deg, hsl(187 71% 97%) 0%, hsl(0 0% 100%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100% / 0.9) 0%, hsl(187 71% 94% / 0.6) 100%);
+
+    --shadow-glow: 0 20px 60px -15px hsl(189 82% 35% / 0.35);
+    --shadow-card: 0 8px 32px -8px hsl(213 21% 16% / 0.12);
+    --shadow-glass: 0 8px 32px 0 hsl(189 82% 35% / 0.18);
+
+    --glass-bg: hsl(0 0% 100% / 0.6);
+    --glass-border: hsl(0 0% 100% / 0.5);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 213 21% 10%;
+    --foreground: 187 71% 94%;
+    --card: 213 21% 14%;
+    --card-foreground: 187 71% 94%;
+    --popover: 213 21% 14%;
+    --popover-foreground: 187 71% 94%;
+    --primary: 189 82% 45%;
+    --primary-foreground: 213 21% 10%;
+    --primary-glow: 189 54% 42%;
+    --secondary: 213 21% 18%;
+    --secondary-foreground: 187 71% 94%;
+    --muted: 213 21% 18%;
+    --muted-foreground: 189 20% 70%;
+    --accent: 189 54% 32%;
+    --accent-foreground: 0 0% 100%;
+    --border: 213 21% 22%;
+    --input: 213 21% 22%;
+    --ring: 189 82% 45%;
+    --glass-bg: hsl(213 21% 16% / 0.6);
+    --glass-border: hsl(189 82% 45% / 0.2);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* @layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv11";
+  }
+} */
+
+@layer components {
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(80px) saturate(100%);
+    -webkit-backdrop-filter: blur(80px) saturate(100%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+  }
+
+  .glass-card {
+    background: var(--gradient-card);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(0 0% 100% / 0.6);
+    box-shadow: var(--shadow-card);
+  }
+
+  .text-gradient {
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 }
+
+ .text-gradient {
+          background: linear-gradient(135deg, #1089a0 0%, #4fd1c5 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .shadow-glow-lg {
+          box-shadow: 0 0 50px -12px rgba(16, 137, 160, 0.4);
+        }
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-up {
+          animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          opacity: 0;
+        }
