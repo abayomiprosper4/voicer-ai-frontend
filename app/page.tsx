@@ -3,7 +3,7 @@ import Landing from "@/components/Landing";
 
 export default function Home() {
   return (
-    <div>
+    <div className="transition-all">
       <Landing />
     </div>
   );

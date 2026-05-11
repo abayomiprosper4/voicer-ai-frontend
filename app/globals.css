@@ -89,6 +89,12 @@
   }
 } */
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 @layer components {
   .glass {
     background: var(--glass-bg);

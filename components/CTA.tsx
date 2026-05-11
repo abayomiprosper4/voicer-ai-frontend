@@ -1,6 +1,7 @@
 "use client";
 
-import { Plus, ArrowRight } from "lucide-react";
+import { Plus, ArrowRight} from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 
@@ -26,9 +27,11 @@ export const CTA = () => {
               <Button size="lg" variant="secondary" className="h-14 px-8 rounded-full gap-2 bg-white text-[#1089a0] hover:bg-white/90 shadow-xl">
                 <Plus className="w-5 h-5" /> Create a Project
               </Button>
+              <Link href="/signup">
               <Button size="lg" variant="outline" className="h-14 px-8 rounded-full gap-2 bg-transparent border-white/40 text-white hover:bg-white/10">
-                Start recording <ArrowRight className="w-5 h-5" />
+                Get Started <ArrowRight className="w-5 h-5" />
               </Button>
+              </Link>
             </div>
           </div>
         </div>

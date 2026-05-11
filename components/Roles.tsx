@@ -23,10 +23,10 @@ export const Roles = () => (
         </div>
         <p className="text-[#212932]/60 text-lg">
           Voicer AI puts contributors first — Every screen, prompt, and workflow is designed
-          to make recording feel effortless.
+          to make recording feel <span className="text-[#1089a0] font-bold">effortless.</span>
         </p>
       </div>
-
+{/* cards */}
       <div className="grid sm:grid-cols-2 gap-6 mb-16">
         {userPerks.map((p, i) => (
           <div

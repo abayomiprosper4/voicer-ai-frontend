@@ -1,7 +1,7 @@
 "use client";
 
 const steps = [
-  { n: "01", title: "Create an account", desc: "Sign up in seconds and get instant access to your contributor workspace." },
+  { n: "01", title: "Login to your account", desc: "Sign in and get instant access to your contributor workspace." },
   { n: "02", title: "View your assigned tasks", desc: "Open a project you've been assigned to and see the prompts waiting for your voice." },
   { n: "03", title: "Record and play back", desc: "Hit record, listen to your take, and re-record as many times as you need until it sounds right." },
   { n: "04", title: "Submit your recording", desc: "Send your final take to reviewers and watch your contribution count climb." },
@@ -24,7 +24,7 @@ export const HowItWorks = () => (
         {steps.map((s, i) => (
           <div
             key={s.n}
-            className="bg-white/5 border border-[#25707D]/10 backdrop-blur-md rounded-2xl p-6 flex gap-5 items-start hover:translate-x-1 transition-transform animate-fade-up"
+            className="bg-white/5 border border-[#25707D]/10 backdrop-blur-md rounded-2xl p-6 flex gap-5 items-start hover:translate-x-5 transition-transform animate-fade-up duration-300"
             style={{ animationDelay: `${i * 0.06}s` }}
           >
             <div className="text-3xl font-extrabold text-gradient leading-none w-14 shrink-0">{s.n}</div>
