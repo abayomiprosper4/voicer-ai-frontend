@@ -1,3 +1,13 @@
+/**
+ * ⚠️ LEGACY / NOT LOADED.
+ *
+ * This project runs Tailwind CSS v4, which does NOT auto-load this file.
+ * The active design tokens live in `app/globals.css` inside the
+ * `@theme inline` block (sourced from the `:root` / `.dark` HSL variables).
+ *
+ * Editing this file has NO effect. To change the theme, edit globals.css.
+ * Kept only as a reference for the original v3-style token intent.
+ */
 import type { Config } from "tailwindcss";
 
 export default {
