@@ -60,6 +60,10 @@
 
   --shadow-glow: var(--shadow-glow);
   --shadow-glass: var(--shadow-glass);
+
+  /* Inter via next/font/google (see app/layout.tsx). Applied app-wide via
+     the `font-sans` class on <body>. */
+  --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
 }
 
 @layer base {
