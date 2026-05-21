@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Fcgoogle, { FcGoogle } from "react-icons/fc";
 import gsap from "gsap";
 import { Navbar } from "@/components/ui/navbar";
 import { useGSAP } from "@gsap/react";
-
 
 export default function LoginPage() {
   useGSAP(() => {
@@ -83,9 +83,9 @@ export default function LoginPage() {
               <Link href="/signup">
                 <button
                   type="submit"
-                  className="w-full py-2 border border-[#212932] text-[#212932] rounded-full font-bold text-lg hover:bg-[#2c3742] hover:text-white transition-colors cursor-pointer"
+                  className="w-full py-2 border border-[#212932] text-[#212932] text-center rounded-full font-semibold text-md hover:bg-[#2c3742] hover:text-white transition-colors cursor-pointer flex justify-center items-center gap-2"
                 >
-                  New User? Sign Up
+                  Continue with <FcGoogle className="w-5 h-5" />
                 </button>
               </Link>
             </form>

@@ -24,11 +24,13 @@ export const CTA = () => {
             </div>
             
             <div className="flex flex-wrap gap-4 lg:justify-end">
-              <Button size="lg" variant="secondary" className="h-14 px-8 rounded-full gap-2 bg-white text-[#1089a0] hover:bg-white/90 shadow-xl">
+              <Link href="/login">
+              <Button size="lg" variant="secondary" className="h-14 px-8 cursor-pointer rounded-full gap-2 bg-white text-[#1089a0] hover:bg-white/90 shadow-xl">
                 <Plus className="w-5 h-5" /> Create a Project
               </Button>
-              <Link href="/signup">
-              <Button size="lg" variant="outline" className="h-14 px-8 rounded-full gap-2 bg-transparent border-white/40 text-white hover:bg-white/10">
+              </Link>
+              <Link href="/login">
+              <Button size="lg" variant="outline" className="h-14 px-8 cursor-pointer rounded-full gap-2 bg-transparent border-white/40 text-white hover:bg-white/10">
                 Get Started <ArrowRight className="w-5 h-5" />
               </Button>
               </Link>

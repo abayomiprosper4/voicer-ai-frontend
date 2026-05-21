@@ -24,57 +24,63 @@ let hasAnimated = false;
 export default function LandingPage() {
   const container = useRef(null);
 
-  useGSAP(
-    () => {
-      if (hasAnimated) return;
+useGSAP(
+  () => {
+    const mm = gsap.matchMedia();
 
+
+    mm.add("(min-width: 768px)", () => {
       const tl = gsap.timeline();
       
-      tl.from(".navbar-anim", {
-        y: -20,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-      });
-
+      tl.from(".navbar-anim", { y: -20, opacity: 0, duration: 0.8 });
       tl.from(".hero-title", { duration: 1.2, text: "", ease: "none" });
       tl.from(".hero-title-2", { duration: 1.2, text: "", ease: "none" });
-
+      
       tl.from(".mic-content", {
         scale: 0.8,
-        opacity: 0,
+        opacity: 0, 
         duration: 1.2,
         ease: "power2.out",
       }, "-=0.5");
 
-
-      tl.from(".hero-content", {
-        y: 20,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power3.out",
-        clearProps: "all",
-      }, "-=0.8");
-
-      [".section-how", ".section-roles", ".section-cta"].forEach((section) => {
-        gsap.from(section, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
-          y: 40,
+            tl.from(
+        ".hero-content",
+        {
+          y: 20,
           opacity: 0,
-          duration: 1,
-          ease: "power2.out",
-        });
-      });
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          clearProps: "all",
+        },
+        "-=0.8",
+      );
+      return () => {
+      };
+    });
 
-      hasAnimated = true;
-    },
-    { scope: container }
-  );
+    mm.add("(max-width: 767px)", () => {
+      gsap.set(".mic-content", { clearProps: "all" });
+      
+      const tl = gsap.timeline();
+      tl.from(".hero-title", { duration: 1, text: "" });
+    });
+
+    [".section-how", ".section-roles", ".section-cta"].forEach((section) => {
+      gsap.from(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 1,
+      });
+    });
+  },
+  { scope: container }
+);
 
   return (
     <div
@@ -83,14 +89,15 @@ export default function LandingPage() {
     >
       <Navbar />
       <header className="relative flex flex-col md:flex-row items-center justify-between pt-32 md:pt-48 pb-24 px-6 max-w-7xl mx-auto z-20">
-
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full md:w-150 h-75 bg-[#1089a0]/15 blur-[120px] -z-10" />
 
         <div className="w-full md:max-w-3xl">
           <h1 className="text-7xl sm:text-6xl md:text-8xl font-bold text-left text-[#212932]/90 mb-8 tracking-tighter">
             <span className="hero-title">The audio engine</span>
             <br />
-            <span className="hero-title-2 text-gradient">For African LLMs.</span>
+            <span className="hero-title-2 text-gradient">
+              For African LLMs.
+            </span>
           </h1>
 
           <div className="hero-content text-lg md:text-2xl text-[#212932]/80 mb-10 max-w-xl leading-relaxed">
@@ -118,14 +125,25 @@ export default function LandingPage() {
             </Link>
           </div>
         </div>
-        <div className="mic-content absolute md:relative top-1/2 md:top-0 right-[-10%] md:right-0 -translate-y-1/2 md:translate-y-0 opacity-[0.05] md:opacity-100 -z-10 md:z-10 pointer-events-none md:pointer-events-auto">
-          <Mic className="w-80 h-80 md:w-64 md:h-64 lg:w-80 lg:h-80 text-[#1089a0]" strokeWidth={1.5} />
+        <div
+          className="mic-content absolute md:relative top-1/2 left-1/2 md:left-auto md:top-0 md:right-0 -translate-x-1/2 md:translate-x-0 -translate-y-1/2 md:translate-y-0 opacity-[0.05] md:opacity-100 -z-10 md:z-10 pointer-events-none md:pointer-events-auto"
+        >
+          <Mic
+            className="w-72 h-72 sm:w-80 sm:h-80 md:w-72 md:h-72 lg:w-80 lg:h-80 text-[#1089a0]"
+            strokeWidth={1.5}
+          />
         </div>
       </header>
 
-      <div className="section-how"><HowItWorks /></div>
-      <div className="section-roles"><Roles /></div>
-      <div className="section-cta"><CTA /></div>
+      <div className="section-how">
+        <HowItWorks />
+      </div>
+      <div className="section-roles">
+        <Roles />
+      </div>
+      <div className="section-cta">
+        <CTA />
+      </div>
 
       <Footer />
     </div>
