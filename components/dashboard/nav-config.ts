@@ -49,16 +49,23 @@ export const NAV_ITEMS: Record<DashboardRole, NavItem[]> = {
     { label: "Submissions", href: "/user/submissions", icon: ClipboardCheck },
     { label: "Profile", href: "/user/profile", icon: User },
   ],
-  reviewer: [
-    { label: "Review Queue", href: "/reviewer", icon: Inbox },
-    { label: "Performance", href: "/reviewer/performance", icon: BarChart3 },
-  ],
+reviewer: [
+  { label: "Dashboard", href: "/reviewer", icon: Home },
+  { label: "Users List", href: "/reviewer/users", icon: Users },
+  { label: "Project", href: "/reviewer/project", icon: FolderKanban },
+  { label: "Notifications", href: "/reviewer/notifications", icon: Bell },
+  { label: "History", href: "/reviewer/history", icon: ClipboardCheck },
+  { label: "Profile", href: "/reviewer/profile", icon: User },
+],
   admin: [
-    { label: "Overview", href: "/admin", icon: LayoutDashboard },
-    { label: "Projects", href: "/admin/projects", icon: FolderKanban },
-    { label: "Users", href: "/admin/users", icon: Users },
-    { label: "Applications", href: "/admin/applications", icon: ClipboardCheck },
-  ],
+  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Users List", href: "/admin/users", icon: Users },
+  { label: "Project", href: "/admin/projects", icon: FolderKanban },
+  { label: "Reviewers List", href: "/admin/reviewers", icon: Users },
+  { label: "Applications", href: "/admin/applications", icon: ClipboardCheck },
+  { label: "History", href: "/admin/history", icon: ClipboardCheck },
+  { label: "Profile", href: "/admin/profile", icon: User },
+],
 };
 
 // Kept for the Profile page's "Become a Reviewer" entry point (not in nav).

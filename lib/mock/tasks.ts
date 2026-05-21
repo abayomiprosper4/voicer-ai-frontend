@@ -14,6 +14,7 @@ export type Task = {
   /** Read: the sentence to read aloud. Spontaneous: the prompt to speak about. */
   prompt: string;
   /** Spontaneous only: an example answer shown in the surface panel. */
+  dateSubmitted: string;
   sample?: string;
   /** Spontaneous only: target/max recording length in seconds. */
   maxDurationSecs?: number;
@@ -25,12 +26,14 @@ const TASKS: Task[] = [
     type: "read",
     language: "Yoruba",
     prompt: "Mo n lọ sí ilé",
+    dateSubmitted: "2024-03-10",
   },
   {
     id: "t2",
     type: "spontaneous",
     language: "Pidgin",
     prompt: "Yarn us the food wey you like",
+    dateSubmitted: "2024-03-11",
     maxDurationSecs: 20,
   },
   {
@@ -38,20 +41,22 @@ const TASKS: Task[] = [
     type: "read",
     language: "English",
     prompt: "I am going to the market",
+    dateSubmitted: "2024-03-12",
   },
   {
     id: "t4",
-    type: "spontaneous",
+    type: "read",
     language: "Yoruba",
     prompt: "A ni lati ka iwe fun idanwo to n bo",
+    dateSubmitted: "2024-03-13",
     maxDurationSecs: 30,
   },
   {
     id: "t5",
     type: "read",
     language: "English",
-    prompt:
-      "I am going to Nithub today to make use of the Wi-Fi for this project. I really need to get there as early as possible.",
+    prompt: "I am going to Nithub today to make use of the Wi-Fi for this project. I really need to get there as early as possible.",
+    dateSubmitted: "2024-03-14",
   },
   {
     id: "t6",
@@ -60,6 +65,7 @@ const TASKS: Task[] = [
     prompt: "Describe your morning routine",
     sample:
       "When I wake up in the morning, I brush my teeth and make ablution to pray. After praying, I take my bath and make breakfast for the family before leaving for work.",
+    dateSubmitted: "2024-03-16",
     maxDurationSecs: 600,
   },
 ];
