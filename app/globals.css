@@ -1,5 +1,71 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Tailwind v4 token bridge.
+   v4 does NOT auto-load tailwind.config.ts. This @theme inline block maps the
+   HSL custom properties defined in :root (and overridden in .dark) into real
+   Tailwind utilities: bg-primary, text-foreground, border-border, shadow-glow…
+   globals.css is the single source of truth for color. NEVER hardcode hex in
+   components — use these semantic tokens so light/dark stays consistent.
+--------------------------------------------------------------------------- */
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-glow: hsl(var(--primary-glow));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-cta: hsl(var(--cta));
+  --color-cta-foreground: hsl(var(--cta-foreground));
+
+  --color-surface: hsl(var(--surface));
+  --color-surface-foreground: hsl(var(--surface-foreground));
+
+  --color-panel: hsl(var(--panel));
+  --color-panel-foreground: hsl(var(--panel-foreground));
+
+  --color-sidebar: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --shadow-glow: var(--shadow-glow);
+  --shadow-glass: var(--shadow-glass);
+
+  /* Inter via next/font/google (see app/layout.tsx). Applied app-wide via
+     the `font-sans` class on <body>. */
+  --font-sans: var(--font-inter), Inter, system-ui, sans-serif;
+}
+
 @layer base {
   :root {
     --background: 187 71% 97%;
@@ -31,6 +97,21 @@
     --border: 189 30% 85%;
     --input: 189 30% 88%;
     --ring: 189 82% 35%;
+
+    /* High-emphasis dark CTA (e.g. "Start recording"). Its label is pure
+       white, not the light page background — so it gets its own pair. */
+    --cta: 213 21% 16%;
+    --cta-foreground: 0 0% 100%;
+
+    /* Desaturated teal content panel (prompt / recorder surface). Neither
+       background nor card represents it, so it gets a dedicated token. */
+    --surface: 187 33% 71%;
+    --surface-foreground: 0 0% 100%;
+
+    /* Muted teal card with DARK text — submission / recent-activity cards.
+       Distinct from --surface (white text) and --secondary (much lighter). */
+    --panel: 187 24% 78%;
+    --panel-foreground: 213 21% 16%;
 
     --radius: 1rem;
 
@@ -74,6 +155,12 @@
     --border: 213 21% 22%;
     --input: 213 21% 22%;
     --ring: 189 82% 45%;
+    --cta: 0 0% 100%;
+    --cta-foreground: 213 21% 16%;
+    --surface: 189 30% 24%;
+    --surface-foreground: 0 0% 100%;
+    --panel: 213 21% 20%;
+    --panel-foreground: 187 71% 94%;
     --glass-bg: hsl(213 21% 16% / 0.6);
     --glass-border: hsl(189 82% 45% / 0.2);
   }
