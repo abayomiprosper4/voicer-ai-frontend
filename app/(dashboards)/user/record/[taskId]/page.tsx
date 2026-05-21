@@ -1,15 +1,24 @@
-"use client";
+import { notFound } from "next/navigation";
+import { RecorderSurface } from "@/components/dashboard/RecorderSurface";
+import { getTaskById, getNextTaskId } from "@/lib/mock/tasks";
 
-import { useParams } from "next/navigation";
+// Next 16: params is a Promise — await it.
+export default async function RecordPage({
+  params,
+}: {
+  params: Promise<{ taskId: string }>;
+}) {
+  const { taskId } = await params;
+  const task = getTaskById(taskId);
+  if (!task) notFound();
 
-export default function RecordPage() {
-  const params = useParams();
-  const taskId = params.taskId;
+  const nextId = getNextTaskId(task.id);
 
   return (
-    <div>
-      <h1 className="mb-6 text-3xl font-bold">Record Task {taskId}</h1>
-      {/* Mic + Playback recording interface */}
-    </div>
+    <RecorderSurface
+      task={task}
+      nextHref={nextId ? `/user/record/${nextId}` : "/user/tasks"}
+      nextLabel={nextId ? "Next task" : "Back to tasks"}
+    />
   );
 }

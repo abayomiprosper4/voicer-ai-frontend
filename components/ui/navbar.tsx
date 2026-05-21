@@ -20,14 +20,26 @@ export const Navbar = () => {
         </Link>
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-muted-foreground">
-          <a href="#how" className="hover:text-foreground transition-colors">How it works</a>
-          <a href="#roles" className="hover:text-foreground transition-colors">Features</a>
-          <a href="#CTA" className="hover:text-foreground transition-colors">CTA</a>
+          <a href="#how" className="hover:text-foreground transition-colors">
+            How it works
+          </a>
+          <a href="#roles" className="hover:text-foreground transition-colors">
+            Features
+          </a>
+          <a href="#CTA" className="hover:text-foreground transition-colors">
+            CTA
+          </a>
         </div>
 
         <div className="flex items-center gap-2">
-          <Button size="sm" className="bg-[#25707D] cursor-pointer text-white hover:opacity-90 shadow-glow gap-1.5">
-            <Plus className="w-4 h-4" /> <span className="hidden sm:inline">Create a Project</span><span className="sm:hidden">New</span>
+          <Button
+            size="sm"
+            className="bg-[#25707D] cursor-pointer text-white hover:opacity-90 shadow-glow gap-1.5"
+            onClick={() => (window.location.href = "/user")}
+          >
+            <Plus className="w-4 h-4" />{" "}
+            <span className="hidden sm:inline">Create a Project</span>
+            <span className="sm:hidden">New</span>
           </Button>
         </div>
       </nav>
