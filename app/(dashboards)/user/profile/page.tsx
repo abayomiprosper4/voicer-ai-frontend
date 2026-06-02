@@ -11,7 +11,7 @@ export default function ProfilePage() {
       description="Manage your account details here. You can also apply to become a reviewer."
       action={
         <Button asChild variant="cta" size="pill">
-          <Link href="/user/apply-reviewer">Become a Reviewer</Link>
+          {/* <Link href="/user/apply-reviewer">Become a Reviewer</Link> */}
         </Button>
       }
     />
