@@ -8,7 +8,7 @@ export default function ProfilePage() {
     <PagePlaceholder
       icon={<User className="h-7 w-7" />}
       title="Profile"
-      description="Manage your account details here. You can also apply to become a reviewer."
+      description="Manage your account details here."
       action={
         <Button asChild variant="cta" size="pill">
           {/* <Link href="/user/apply-reviewer">Become a Reviewer</Link> */}
