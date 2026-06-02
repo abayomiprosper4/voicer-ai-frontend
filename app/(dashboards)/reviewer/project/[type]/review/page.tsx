@@ -3,17 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Check } from "lucide-react";
+import { useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SectionHeader, NextArrow } from "@/components/dashboard/ui";
 
 type ReviewStep = "comment" | "decision" | "submitted";
 
-export default async function ProjectReviewPage({
-  params,
-}: {
-  params: Promise<{ type: string }>;
-}) {
-  const { type } = await params;
+export default function ProjectReviewPage() {
+  const params = useParams();
+  const type = params.type as string;
   const [step, setStep] = useState<ReviewStep>("comment");
   const [comment, setComment] = useState("");
 
@@ -63,30 +61,26 @@ export default async function ProjectReviewPage({
               onClick={handleNext}
               variant="default"
               size="xl"
-              className="w-full max-w-md"
+              className="w-full max-w-md cursor-pointer"
             >
               Submit
             </Button>
           </div>
 
           <div className="mt-6 flex justify-end">
-            <NextArrow
-              onClick={handleNext}
-              disabled={false}
-              label="Next"
-            />
+            <NextArrow onClick={handleNext} disabled={false} label="Next" />
           </div>
         </>
       )}
 
       {step === "decision" && (
         <>
-          <div className="mb-12 flex flex-col gap-4">
+          <div className="mb-12 items-center flex flex-col gap-4">
             <Button
               onClick={handleApprove}
               variant="default"
               size="xl"
-              className="w-full"
+              className="w-full cursor-pointer"
             >
               Approve
             </Button>
@@ -94,27 +88,20 @@ export default async function ProjectReviewPage({
               onClick={handleReject}
               variant="destructive"
               size="xl"
-              className="w-full"
+              className="w-full cursor-pointer"
             >
               Reject
             </Button>
           </div>
 
           <div className="flex justify-center">
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-            >
+            <Button asChild variant="outline" size="lg">
               <Link href={`/reviewer/project/${type}`}>Back</Link>
             </Button>
           </div>
 
           <div className="mt-6 flex justify-end">
-            <NextArrow
-              disabled={true}
-              label="Next"
-            />
+            <NextArrow disabled={true} label="Next" />
           </div>
         </>
       )}
@@ -131,20 +118,13 @@ export default async function ProjectReviewPage({
           </div>
 
           <div className="flex justify-center">
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-            >
+            <Button asChild variant="outline" size="lg">
               <Link href="/reviewer">Back to Dashboard</Link>
             </Button>
           </div>
 
           <div className="mt-6 flex justify-end">
-            <NextArrow
-              href="/reviewer"
-              label="Finish"
-            />
+            <NextArrow href="/reviewer" label="Finish" />
           </div>
         </>
       )}
