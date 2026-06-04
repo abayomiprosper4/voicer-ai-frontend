@@ -58,11 +58,10 @@ reviewer: [
   { label: "Profile", href: "/reviewer/profile", icon: User },
 ],
   admin: [
-  { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
+  { label: "Dashboard", href: "/admin", icon: Home },
   { label: "Users List", href: "/admin/users", icon: Users },
   { label: "Project", href: "/admin/projects", icon: FolderKanban },
-  { label: "Reviewers List", href: "/admin/reviewers", icon: Users },
-  { label: "Applications", href: "/admin/applications", icon: ClipboardCheck },
+  { label: "Reviewer's List", href: "/admin/reviewers", icon: Users },
   { label: "History", href: "/admin/history", icon: ClipboardCheck },
   { label: "Profile", href: "/admin/profile", icon: User },
 ],
