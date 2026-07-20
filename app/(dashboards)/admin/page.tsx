@@ -1,396 +1,172 @@
 "use client";
 
-import { Bell, UserCircle, Search, Trash2 } from "lucide-react";
-import {
-  getAdminStats,
-  getReviewerActivity,
-  getSubmissionTrends,
-  getLanguageDistribution,
-  type TrendPoint,
-  type LangDistribution,
+import { useMemo } from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Users, FolderKanban, Mic2, Download } from "lucide-react";
+import { 
+  getAdminStats, 
+  getSubmissionTrends, 
+  getLanguageDistribution, 
+  getReviewerActivity 
 } from "@/lib/mock/admin";
-import { cn } from "@/lib/utils";
-
-function LineChart({ data }: { data: TrendPoint[] }) {
-  const width = 500;
-  const height = 200;
-  const maxY = 32;
-
-  const getPoints = (seriesKey: keyof Omit<TrendPoint, "day">) => {
-    return data
-      .map((d, i) => {
-        const x = (i / 5) * width;
-        const y = height - (d[seriesKey] / maxY) * height;
-        return `${x},${y}`;
-      })
-      .join(" ");
-  };
-
-  return (
-    <svg viewBox="-20 -10 540 230" className="w-full h-auto min-h-[250px]">
-      {/* Grid lines */}
-      {[0, 8, 16, 24, 32].map((y) => {
-        const yCoord = height - (y / maxY) * height;
-        return (
-          <g key={y}>
-            <text
-              x="-5"
-              y={yCoord + 4}
-              textAnchor="end"
-              fontSize="12"
-              fill="currentColor"
-              className="text-muted-foreground"
-            >
-              {y}
-            </text>
-            <line
-              x1="10"
-              y1={yCoord}
-              x2={width}
-              y2={yCoord}
-              stroke="currentColor"
-              className="text-border"
-              strokeWidth="1"
-              strokeDasharray="4 4"
-            />
-          </g>
-        );
-      })}
-      {/* X axis labels */}
-      {[0, 1, 2, 3, 4, 5].map((x) => {
-        const xCoord = (x / 5) * width;
-        return (
-          <text
-            key={x}
-            x={xCoord}
-            y={height + 20}
-            textAnchor="middle"
-            fontSize="12"
-            fill="currentColor"
-            className="text-muted-foreground"
-          >
-            {x}
-          </text>
-        );
-      })}
-
-      {/* Lines */}
-      <polyline
-        points={getPoints("seriesA")}
-        fill="none"
-        stroke="currentColor"
-        className="text-primary"
-        strokeWidth="2"
-      />
-      <polyline
-        points={getPoints("seriesB")}
-        fill="none"
-        stroke="currentColor"
-        className="text-emerald-500"
-        strokeWidth="2"
-      />
-      <polyline
-        points={getPoints("seriesC")}
-        fill="none"
-        stroke="currentColor"
-        className="text-amber-400"
-        strokeWidth="2"
-      />
-
-      {/* Data points */}
-      {(["seriesA", "seriesB", "seriesC"] as const).map((seriesKey, sIdx) =>
-        data.map((d, i) => {
-          const x = (i / 5) * width;
-          const y = height - (d[seriesKey] / maxY) * height;
-          const colorClass =
-            sIdx === 0
-              ? "text-primary"
-              : sIdx === 1
-                ? "text-emerald-500"
-                : "text-amber-400";
-          return (
-            <circle
-              key={`${seriesKey}-${i}`}
-              cx={x}
-              cy={y}
-              r="3"
-              fill="currentColor"
-              className={colorClass}
-            />
-          );
-        })
-      )}
-    </svg>
-  );
-}
-
-function BarChart({ data }: { data: LangDistribution[] }) {
-  const width = 500;
-  const height = 200;
-  const maxY = 100;
-  const groupWidth = width / 6;
-  const barWidth = 10;
-  const barGap = 2;
-  const colors = [
-    "text-amber-400",
-    "text-primary",
-    "text-emerald-500",
-    "text-cta",
-  ];
-  const keys = ["english", "yoruba", "pidgin", "other"] as const;
-
-  return (
-    <svg viewBox="-20 -10 540 230" className="w-full h-auto min-h-[250px]">
-      {/* Grid lines */}
-      {[0, 25, 50, 75, 100].map((y) => {
-        const yCoord = height - (y / maxY) * height;
-        return (
-          <g key={y}>
-            <text
-              x="-5"
-              y={yCoord + 4}
-              textAnchor="end"
-              fontSize="12"
-              fill="currentColor"
-              className="text-muted-foreground"
-            >
-              {y}
-            </text>
-            <line
-              x1="10"
-              y1={yCoord}
-              x2={width}
-              y2={yCoord}
-              stroke="currentColor"
-              className="text-border"
-              strokeWidth="1"
-              strokeDasharray="4 4"
-            />
-          </g>
-        );
-      })}
-
-      {/* X axis labels */}
-      {[0, 1, 2, 3, 4, 5].map((x) => {
-        const xCoord = x * groupWidth + groupWidth / 2;
-        return (
-          <text
-            key={x}
-            x={xCoord}
-            y={height + 20}
-            textAnchor="middle"
-            fontSize="12"
-            fill="currentColor"
-            className="text-muted-foreground"
-          >
-            {x}
-          </text>
-        );
-      })}
-
-      {/* Bars */}
-      {data.map((d, i) => {
-        const groupX =
-          i * groupWidth + (groupWidth - (4 * barWidth + 3 * barGap)) / 2;
-        return keys.map((k, j) => {
-          const val = d[k];
-          const barH = (val / maxY) * height;
-          const x = groupX + j * (barWidth + barGap);
-          const y = height - barH;
-          return (
-            <rect
-              key={`${i}-${k}`}
-              x={x}
-              y={y}
-              width={barWidth}
-              height={barH}
-              fill="currentColor"
-              className={colors[j]}
-            />
-          );
-        });
-      })}
-    </svg>
-  );
-}
 
 export default function AdminDashboardPage() {
   const stats = getAdminStats();
-  const reviewerActivity = getReviewerActivity();
   const trends = getSubmissionTrends();
   const langDist = getLanguageDistribution();
+  const activity = getReviewerActivity();
 
   return (
-    <div className="flex flex-col gap-10">
-      {/* Header */}
-      <header className="relative flex items-center justify-center pt-2">
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-          Dashboard
-        </h1>
-        <div className="absolute right-0 flex items-center gap-3 text-muted-foreground">
-          <button
-            aria-label="Notifications"
-            className="rounded-md transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <Bell className="h-6 w-6" />
-          </button>
-          <button
-            aria-label="Profile"
-            className="rounded-md transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <UserCircle className="h-6 w-6" />
-          </button>
-        </div>
-      </header>
-
-      {/* Search */}
-      <div className="relative mx-auto w-full max-w-xl">
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-full rounded-full border border-border bg-secondary py-3 pl-6 pr-12 text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-        />
-        <Search className="absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
+    <div className="p-8 max-w-6xl mx-auto space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">Admin Overview</h1>
+        <p className="text-muted-foreground mt-1">Platform-wide metrics and dataset insights.</p>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-        {[
-          { label: "TOTAL USERS", value: stats.totalUsers },
-          { label: "TOTAL PROJECTS", value: stats.totalProjects },
-          { label: "TOTAL REVIEWERS", value: stats.totalReviewers },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className="flex flex-col items-center rounded-2xl border border-border bg-card py-6 shadow-sm"
-          >
-            <span className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-              {stat.label}
-            </span>
-            <span className="mt-2 text-3xl font-bold text-foreground">
-              {stat.value}
-            </span>
-          </div>
-        ))}
+      {/* Aggregate Stats */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Total Users</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{stats.totalUsers}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Total Projects</CardTitle>
+            <FolderKanban className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{stats.totalProjects}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Total Reviewers</CardTitle>
+            <Mic2 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-3xl font-bold">{stats.totalReviewers}</div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Trends */}
-      <div className="flex flex-col gap-6">
-        <h2 className="text-center text-xl font-semibold text-foreground">
-          Submission Trends
-        </h2>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
-          <div className="flex flex-col gap-4">
-            <LineChart data={trends} />
-            <p className="text-center text-sm text-foreground">
-              Monday to Friday submissions
-            </p>
-          </div>
-          <div className="flex flex-col gap-4">
-            <BarChart data={langDist} />
-            <p className="text-center text-sm text-foreground">
-              Language Distribution
-            </p>
-          </div>
-        </div>
+      <div className="text-center">
+        <h2 className="text-xl font-semibold text-foreground">Submission Trends</h2>
+      </div>
+
+      {/* Charts */}
+      <div className="grid gap-8 md:grid-cols-2">
+        {/* Line Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Monday to Friday Submissions</CardTitle>
+          </CardHeader>
+          <CardContent className="flex items-center justify-center">
+            <svg viewBox="0 0 500 300" className="w-full max-h-64 overflow-visible">
+              {/* Grid Lines */}
+              {[0, 10, 20, 30].map(y => (
+                <line key={y} x1="0" y1={300 - (y * 10)} x2="500" y2={300 - (y * 10)} stroke="currentColor" className="text-border" strokeDasharray="4" />
+              ))}
+              
+              {/* Line A */}
+              <polyline 
+                fill="none" 
+                stroke="currentColor" 
+                className="text-primary" 
+                strokeWidth="4" 
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                points={trends.map((p, i) => `${(i / 5) * 500},${300 - (p.seriesA * 10)}`).join(" ")} 
+              />
+              {/* Line B */}
+              <polyline 
+                fill="none" 
+                stroke="currentColor" 
+                className="text-emerald-500" 
+                strokeWidth="4" 
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                points={trends.map((p, i) => `${(i / 5) * 500},${300 - (p.seriesB * 10)}`).join(" ")} 
+              />
+              {/* Line C */}
+              <polyline 
+                fill="none" 
+                stroke="currentColor" 
+                className="text-amber-500" 
+                strokeWidth="4" 
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                points={trends.map((p, i) => `${(i / 5) * 500},${300 - (p.seriesC * 10)}`).join(" ")} 
+              />
+            </svg>
+          </CardContent>
+        </Card>
+
+        {/* Bar Chart */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Language Distribution</CardTitle>
+          </CardHeader>
+          <CardContent className="flex items-end justify-between h-64 pt-6 gap-2">
+            {langDist.map((item, i) => (
+              <div key={i} className="flex gap-1 flex-1 h-full items-end justify-center">
+                <div className="w-2 md:w-4 bg-primary rounded-t-sm" style={{ height: `${item.english}%` }} />
+                <div className="w-2 md:w-4 bg-amber-400 rounded-t-sm" style={{ height: `${item.yoruba}%` }} />
+                <div className="w-2 md:w-4 bg-emerald-500 rounded-t-sm" style={{ height: `${item.pidgin}%` }} />
+                <div className="w-2 md:w-4 bg-foreground/20 rounded-t-sm" style={{ height: `${item.other}%` }} />
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="text-center pt-8">
+        <h2 className="text-xl font-semibold text-foreground">Recent Reviewer Activity Table</h2>
       </div>
 
       {/* Activity Table */}
-      <div className="flex flex-col gap-6">
-        <h2 className="text-center text-xl font-semibold text-foreground">
-          Recent Reviewer Activity Table
-        </h2>
-        <div className="w-full overflow-x-auto rounded-xl border border-border">
-          <table className="w-full min-w-[800px] text-left text-sm text-foreground">
-            <thead className="bg-primary text-primary-foreground">
+      <Card className="overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left">
+            <thead className="text-primary-foreground bg-primary">
               <tr>
-                <th className="w-12 rounded-tl-xl px-4 py-3 text-center font-semibold">
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 cursor-pointer rounded border-border accent-primary"
-                    aria-label="Select all"
-                  />
-                </th>
-                <th className="px-4 py-3 font-semibold">Name</th>
-                <th className="px-4 py-3 font-semibold">Email address</th>
-                <th className="px-4 py-3 font-semibold">Date Joined</th>
-                <th className="px-4 py-3 font-semibold">Status</th>
-                <th className="rounded-tr-xl px-4 py-3 font-semibold">
-                  Delete User
-                </th>
+                <th className="px-6 py-4 font-semibold">Name</th>
+                <th className="px-6 py-4 font-semibold">Email address</th>
+                <th className="px-6 py-4 font-semibold">Date Joined</th>
+                <th className="px-6 py-4 font-semibold">Status</th>
               </tr>
             </thead>
-            <tbody className="bg-card">
-              {reviewerActivity.map((activity, index) => {
-                const isApproved = activity.status === "approved";
-                const isPending = activity.status === "pending";
-                const isRejected = activity.status === "rejected";
-
-                return (
-                  <tr
-                    key={activity.id}
-                    className={cn(
-                      "border-b border-border transition-colors",
-                      index % 2 === 0 ? "bg-secondary/30" : "bg-card",
-                      index === reviewerActivity.length - 1 && "border-none"
-                    )}
-                  >
-                    <td className="w-12 px-4 py-3 text-center">
-                      <input
-                        type="checkbox"
-                        className="h-4 w-4 cursor-pointer rounded border-border accent-primary"
-                        aria-label={`Select user ${activity.name}`}
-                      />
-                    </td>
-                    <td className="px-4 py-3">{activity.name}</td>
-                    <td className="px-4 py-3">{activity.email}</td>
-                    <td className="px-4 py-3">{activity.dateJoined}</td>
-                    <td className="px-4 py-3">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className={cn(
-                            "h-2.5 w-2.5 rounded-full",
-                            isApproved && "bg-emerald-500",
-                            isPending && "bg-amber-400",
-                            isRejected && "bg-red-500"
-                          )}
-                        />
-                        <span
-                          className={cn(
-                            "font-medium capitalize",
-                            isApproved && "text-emerald-600",
-                            isPending && "text-amber-500",
-                            isRejected && "text-red-500"
-                          )}
-                        >
-                          {activity.status}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-center sm:text-left">
-                      <button
-                        type="button"
-                        className="ml-4 rounded-md text-muted-foreground transition-colors hover:text-destructive focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                        aria-label={`Delete user ${activity.name}`}
-                      >
-                        <Trash2 className="mx-auto h-5 w-5 sm:mx-0" />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+            <tbody className="divide-y divide-border">
+              {activity.map((row) => (
+                <tr key={row.id} className="hover:bg-muted/30 transition-colors bg-card even:bg-secondary/10">
+                  <td className="px-6 py-4 font-medium">{row.name}</td>
+                  <td className="px-6 py-4 text-muted-foreground">{row.email}</td>
+                  <td className="px-6 py-4 text-muted-foreground">{row.dateJoined}</td>
+                  <td className="px-6 py-4 capitalize">
+                    <div className="flex items-center gap-2">
+                      <div className={`h-2.5 w-2.5 rounded-full ${
+                        row.status === 'approved' ? 'bg-emerald-500' :
+                        row.status === 'pending' ? 'bg-amber-500' : 'bg-red-500'
+                      }`} />
+                      <span className={`${
+                        row.status === 'approved' ? 'text-emerald-600 dark:text-emerald-400' :
+                        row.status === 'pending' ? 'text-amber-600 dark:text-amber-400' : 'text-red-500'
+                      }`}>
+                        {row.status}
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
-      </div>
-
-      {/* Export Data Button */}
-      <button
-        type="button"
-        className="mx-auto w-full max-w-lg rounded-full bg-cta py-4 text-lg font-semibold text-cta-foreground transition-colors hover:bg-cta/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        Export data
-      </button>
+      </Card>
     </div>
   );
 }
