@@ -2,27 +2,16 @@ import type { ComponentType } from "react";
 import {
   Home,
   ListChecks,
-  MousePointerClick,
   Bell,
   ClipboardCheck,
   User,
-  UserPlus,
-  Inbox,
-  BarChart3,
   FolderKanban,
   Users,
-  LayoutDashboard,
+  Settings,
+  PlayCircle
 } from "lucide-react";
 
-/**
- * Single source of truth for dashboard navigation.
- *
- * The shell (sidebar / mobile drawer) is role-agnostic — it renders whatever
- * items it is handed. Contributor IA comes from the Figma sidebar; reviewer
- * and admin remain placeholders until their designs arrive.
- */
-
-// Version-agnostic icon type (avoids depending on a specific lucide type export).
+// Version-agnostic icon type
 export type NavIcon = ComponentType<{ className?: string }>;
 
 export type NavItem = {
@@ -31,53 +20,51 @@ export type NavItem = {
   icon: NavIcon;
 };
 
-export type DashboardRole = "contributor" | "reviewer" | "admin";
+export type DashboardRole = "owner" | "admin" | "contributor" | "reviewer";
 
 export const ROLE_LABELS: Record<DashboardRole, string> = {
+  owner: "Organization Owner",
+  admin: "Project Admin",
   contributor: "Contributor",
   reviewer: "Reviewer",
-  admin: "Admin",
 };
-
-export const NAV_ITEMS: Record<DashboardRole, NavItem[]> = {
-  // From the Figma contributor sidebar.
-  contributor: [
-    { label: "Dashboard", href: "/user", icon: Home },
-    { label: "Task Management", href: "/user/tasks", icon: ListChecks },
-    { label: "Select Project", href: "/user/select-project", icon: MousePointerClick },
-    { label: "Notifications", href: "/user/notifications", icon: Bell },
-    { label: "Submissions", href: "/user/submissions", icon: ClipboardCheck },
-    { label: "Profile", href: "/user/profile", icon: User },
-  ],
-reviewer: [
-  { label: "Dashboard", href: "/reviewer", icon: Home },
-  { label: "Users List", href: "/reviewer/users", icon: Users },
-  { label: "Project", href: "/reviewer/project", icon: FolderKanban },
-  { label: "Notifications", href: "/reviewer/notifications", icon: Bell },
-  { label: "History", href: "/reviewer/history", icon: ClipboardCheck },
-  { label: "Profile", href: "/reviewer/profile", icon: User },
-],
-  admin: [
-  { label: "Dashboard", href: "/admin", icon: Home },
-  { label: "Users List", href: "/admin/users", icon: Users },
-  { label: "Project", href: "/admin/projects", icon: FolderKanban },
-  { label: "Reviewer's List", href: "/admin/reviewers", icon: Users },
-  { label: "History", href: "/admin/history", icon: ClipboardCheck },
-  { label: "Profile", href: "/admin/profile", icon: User },
-],
-};
-
-// Kept for the Profile page's "Become a Reviewer" entry point (not in nav).
-export const APPLY_REVIEWER = {
-  label: "Become a Reviewer",
-  href: "/user/apply-reviewer",
-  icon: UserPlus,
-} satisfies NavItem;
 
 /**
- * Returns the href of the single nav item to highlight for a pathname: the
- * longest item href that is the path itself or a parent of it. Prevents
- * "/user" staying active while on "/user/tasks".
+ * Dynamically generate navigation based on the user's role and the current project context.
+ */
+export function getNavItems(role: DashboardRole, orgSlug: string, projectSlug: string): NavItem[] {
+  const base = `/${orgSlug}/${projectSlug}`;
+  
+  if (role === 'owner' || role === 'admin') {
+    return [
+      { label: "Overview", href: `${base}`, icon: Home },
+      { label: "Tasks", href: `${base}/tasks`, icon: ListChecks },
+      { label: "Members", href: `${base}/members`, icon: Users },
+      { label: "Settings", href: `${base}/settings`, icon: Settings },
+    ];
+  }
+  
+  if (role === 'contributor') {
+    return [
+      { label: "Dashboard", href: `${base}`, icon: Home },
+      { label: "Available Tasks", href: `${base}/available`, icon: ListChecks },
+      { label: "My Submissions", href: `${base}/submissions`, icon: ClipboardCheck },
+    ];
+  }
+  
+  if (role === 'reviewer') {
+    return [
+      { label: "Dashboard", href: `${base}`, icon: Home },
+      { label: "Review Queue", href: `${base}/queue`, icon: PlayCircle },
+      { label: "History", href: `${base}/history`, icon: ClipboardCheck },
+    ];
+  }
+
+  return [];
+}
+
+/**
+ * Returns the href of the single nav item to highlight for a pathname
  */
 export function activeHref(items: NavItem[], pathname: string): string | null {
   let best: string | null = null;
