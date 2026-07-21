@@ -1,12 +1,14 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { use, useState, useEffect } from "react";
 import { 
   useRequestExport, 
   useExports, 
   useExportStatus, 
   useExportDownload,
-  useLanguages
+  useLanguages,
+  useOrganizations,
+  useProjects
 } from "@/lib/api/queries";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,7 +16,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
-import { FileArchive, Loader2, Download, AlertCircle, CheckCircle2 } from "lucide-react";
+import { FileArchive, Download, AlertCircle, CheckCircle2 } from "lucide-react";
 
 export default function ExportDatasetPage({
   params,
@@ -23,13 +25,27 @@ export default function ExportDatasetPage({
 }) {
   const { orgSlug, projectSlug } = use(params);
 
+  const { data: orgs } = useOrganizations();
+  const org = orgs?.find(o => 
+    (o.id === orgSlug) || 
+    (o.slug === orgSlug) || 
+    (o.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") === orgSlug)
+  );
+
+  const { data: projects } = useProjects(org?.id);
+  const project = projects?.find(p => 
+    (p.id === projectSlug) || 
+    (p.slug === projectSlug) || 
+    (p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") === projectSlug)
+  );
+
   const { data: languages } = useLanguages();
   const requestExport = useRequestExport();
-  const { data: exportsList, isLoading: listLoading } = useExports(projectSlug);
+  const { data: exportsList, isLoading: listLoading } = useExports(project?.id as string);
 
   const [formData, setFormData] = useState({
     format: "JSON" as "CSV" | "JSON" | "ZIP",
-    approvedOnly: true,
+    approvedOnly: false,
     languageId: "all",
     startDate: "",
     endDate: "",
@@ -59,9 +75,10 @@ export default function ExportDatasetPage({
 
   const handleRequestExport = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!project?.id) return;
     
     const payload: any = {
-      projectId: projectSlug,
+      projectId: project.id,
       format: formData.format,
       approvedOnly: formData.approvedOnly,
     };
@@ -190,7 +207,7 @@ export default function ExportDatasetPage({
                   </>
                 ) : (
                   <>
-                    <Loader2 className="h-6 w-6 text-primary animate-spin" />
+                    <LogoLoader className="h-6 w-6 text-primary animate-spin" />
                     <p className="text-sm font-medium text-muted-foreground">
                       Packaging dataset... This may take a few minutes.
                     </p>
@@ -205,7 +222,7 @@ export default function ExportDatasetPage({
                 className="w-full gap-2" 
                 disabled={requestExport.isPending || !!activeExportId}
               >
-                {requestExport.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileArchive className="h-4 w-4" />}
+                {requestExport.isPending ? <LogoLoader className="h-4 w-4 animate-spin" /> : <FileArchive className="h-4 w-4" />}
                 Generate Export
               </Button>
             </CardFooter>
@@ -251,7 +268,7 @@ export default function ExportDatasetPage({
                       onClick={() => handleDownloadOldExport(exp.id)}
                     >
                       {activeExportId === exp.id ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <LogoLoader className="h-4 w-4 animate-spin" />
                       ) : (
                         <Download className="h-4 w-4" />
                       )}
