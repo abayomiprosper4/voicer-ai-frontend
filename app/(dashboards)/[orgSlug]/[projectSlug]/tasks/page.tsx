@@ -171,8 +171,7 @@ export default function TasksPage({ params }: { params: Promise<{ projectSlug: s
                     >
                       <SelectTrigger id="language">
                         <SelectValue placeholder="Select a language">
-                          {languages?.find((l: any) => l.id === formData.languageId)?.name || 
-                           (formData.languageId === "default-uuid" ? "English (Mock)" : formData.languageId)}
+                          {languages?.find((l: any) => l.id === formData.languageId)?.name || formData.languageId}
                         </SelectValue>
                       </SelectTrigger>
                       <SelectContent>
@@ -180,7 +179,7 @@ export default function TasksPage({ params }: { params: Promise<{ projectSlug: s
                           <SelectItem key={lang.id} value={lang.id}>{lang.name}</SelectItem>
                         ))}
                         {(!languages || languages.length === 0) && (
-                          <SelectItem value="default-uuid">English (Mock)</SelectItem>
+                          <SelectItem value="none" disabled>No languages available</SelectItem>
                         )}
                       </SelectContent>
                     </Select>

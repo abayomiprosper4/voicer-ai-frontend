@@ -1,9 +1,10 @@
 /**
  * In-memory mock data for the admin dashboard screens.
- * Matches the Figma admin designs. Swap for real API later.
+ * Matches the Figma admin designs.
+ * TODO: Replace with real API. The backend currently lacks system-wide analytics APIs.
  */
 
-import type { SubmissionStatus } from "./submissions";
+export type SubmissionStatus = "pending" | "approved" | "rejected";
 
 /* ── Dashboard stats ──────────────────────────────────────────────── */
 
