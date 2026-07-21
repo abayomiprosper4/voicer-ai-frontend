@@ -15,7 +15,13 @@ export function CTA() {
         transition={{ duration: 0.5 }}
       >
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-6 font-serif">
-          Ready to <span className="italic text-[#1089a0]">scale</span> your audio collection?
+          Ready to <span className="relative inline-block text-[#1089a0] italic z-10">
+            scale
+            <svg className="absolute -bottom-1 sm:-bottom-2 left-0 w-[120%] -ml-[10%] h-auto -z-10" viewBox="0 0 424 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 15.5C74 6.5 224 -1.5 421 9.5" stroke="currentColor" strokeWidth="12" strokeLinecap="round" />
+              <path d="M9 21C86 14 233 8 415 17" stroke="currentColor" strokeWidth="8" strokeLinecap="round" opacity="0.4" />
+            </svg>
+          </span> your audio collection?
         </h2>
         <p className="text-muted-foreground text-base sm:text-lg leading-relaxed max-w-xl mx-auto mb-10">
           Stop managing datasets in spreadsheets and start building high-quality speech data with the infrastructure it deserves.
