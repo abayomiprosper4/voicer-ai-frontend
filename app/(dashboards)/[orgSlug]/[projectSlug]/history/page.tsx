@@ -51,7 +51,7 @@ export default function ReviewerHistoryPage({
               {isLoading ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center">
-                    <LogoLoader className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
+                    <LogoLoader className="h-6 w-6 text-muted-foreground mx-auto" />
                   </td>
                 </tr>
               ) : error ? (

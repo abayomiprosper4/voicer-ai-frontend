@@ -207,7 +207,7 @@ export default function ExportDatasetPage({
                   </>
                 ) : (
                   <>
-                    <LogoLoader className="h-6 w-6 text-primary animate-spin" />
+                    <LogoLoader className="h-6 w-6 text-primary" />
                     <p className="text-sm font-medium text-muted-foreground">
                       Packaging dataset... This may take a few minutes.
                     </p>
@@ -222,7 +222,7 @@ export default function ExportDatasetPage({
                 className="w-full gap-2" 
                 disabled={requestExport.isPending || !!activeExportId}
               >
-                {requestExport.isPending ? <LogoLoader className="h-4 w-4 animate-spin" /> : <FileArchive className="h-4 w-4" />}
+                {requestExport.isPending ? <LogoLoader className="h-4 w-4" /> : <FileArchive className="h-4 w-4" />}
                 Generate Export
               </Button>
             </CardFooter>
@@ -268,7 +268,7 @@ export default function ExportDatasetPage({
                       onClick={() => handleDownloadOldExport(exp.id)}
                     >
                       {activeExportId === exp.id ? (
-                        <LogoLoader className="h-4 w-4 animate-spin" />
+                        <LogoLoader className="h-4 w-4" />
                       ) : (
                         <Download className="h-4 w-4" />
                       )}

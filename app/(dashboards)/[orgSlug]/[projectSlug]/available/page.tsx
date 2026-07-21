@@ -17,7 +17,7 @@ export default function AvailableTasksPage({
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 text-muted-foreground" />
       </div>
     );
   }

@@ -73,7 +73,7 @@ export default function SubmissionsHistoryPage({
               {isLoading ? (
                 <tr>
                   <td colSpan={4} className="px-6 py-12 text-center">
-                    <LogoLoader className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
+                    <LogoLoader className="h-6 w-6 text-muted-foreground mx-auto" />
                   </td>
                 </tr>
               ) : error ? (

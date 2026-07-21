@@ -63,7 +63,7 @@ export default function OrganizationPage({ params }: { params: Promise<{ orgSlug
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 text-muted-foreground" />
       </div>
     );
   }
@@ -175,7 +175,7 @@ export default function OrganizationPage({ params }: { params: Promise<{ orgSlug
               </div>
               <DialogFooter>
                 <Button type="submit" disabled={createProject.isPending}>
-                  {createProject.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
+                  {createProject.isPending && <LogoLoader className="mr-2 h-4 w-4" />}
                   Create Project
                 </Button>
               </DialogFooter>

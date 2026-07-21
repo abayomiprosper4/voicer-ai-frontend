@@ -112,7 +112,7 @@ export default function ReviewDetailPage({
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 text-muted-foreground" />
       </div>
     );
   }
@@ -264,7 +264,7 @@ export default function ReviewDetailPage({
               Cancel
             </Button>
             <Button type="submit" disabled={submitReview.isPending}>
-              {submitReview.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
+              {submitReview.isPending && <LogoLoader className="mr-2 h-4 w-4" />}
               Submit Review
             </Button>
           </CardFooter>

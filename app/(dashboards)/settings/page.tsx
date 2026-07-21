@@ -47,7 +47,7 @@ export default function GlobalSettingsPage() {
   if (langLoading || userLangLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 text-muted-foreground" />
       </div>
     );
   }
@@ -159,7 +159,7 @@ export default function GlobalSettingsPage() {
                 Saved successfully
               </div>
               <Button onClick={handleSave} disabled={updateLanguages.isPending || localLangs.length === 0}>
-                {updateLanguages.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
+                {updateLanguages.isPending && <LogoLoader className="mr-2 h-4 w-4" />}
                 Save Languages
               </Button>
             </div>

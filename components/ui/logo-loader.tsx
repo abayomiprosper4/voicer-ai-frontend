@@ -41,9 +41,12 @@ export function LogoLoader({ className, variant, simple }: LogoLoaderProps) {
     if (variant) {
       setActiveVariant(variant);
     } else {
-      setActiveVariant("pulse-sequential");
+      // Auto-detect small size to avoid chaotic animations in tiny buttons
+      const isSmall = simple || (className && /(h-[3-6]|w-[3-6]|text-sm)/.test(className));
+      const pool = isSmall ? SIMPLE_VARIANTS : VARIANTS;
+      setActiveVariant(pool[Math.floor(Math.random() * pool.length)]);
     }
-  }, [variant]);
+  }, [variant, simple, className]);
 
   // Before hydration, render a static loader to prevent hydration mismatch
   const renderVariant = mounted ? activeVariant : (variant || "pulse-sequential");

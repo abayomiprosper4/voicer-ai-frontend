@@ -36,7 +36,7 @@ export default function MembersPage({ params }: { params: Promise<{ projectSlug:
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 text-muted-foreground" />
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function MembersPage({ params }: { params: Promise<{ projectSlug:
               </div>
               <DialogFooter>
                 <Button type="submit" disabled={inviteMember.isPending}>
-                  {inviteMember.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
+                  {inviteMember.isPending && <LogoLoader className="mr-2 h-4 w-4" />}
                   Send Invitation
                 </Button>
               </DialogFooter>
