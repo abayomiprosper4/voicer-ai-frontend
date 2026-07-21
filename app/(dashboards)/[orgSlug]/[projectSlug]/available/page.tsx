@@ -1,10 +1,10 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { use } from "react";
 import Link from "next/link";
 import { useAvailableTasks } from "@/lib/api/queries";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Loader2, FileAudio, PlayCircle, Settings2, ArrowRight, ListChecks } from "lucide-react";
+import {  FileAudio, PlayCircle, Settings2, ArrowRight, ListChecks } from "lucide-react";
 
 export default function AvailableTasksPage({
   params,
@@ -17,7 +17,7 @@ export default function AvailableTasksPage({
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
   }

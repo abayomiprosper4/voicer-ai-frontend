@@ -1,9 +1,9 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { use } from "react";
 import { useReviewerHistory } from "@/lib/api/queries";
 import { Card } from "@/components/ui/card";
-import { Loader2, ClipboardCheck } from "lucide-react";
+import {  ClipboardCheck } from "lucide-react";
 
 export default function ReviewerHistoryPage({
   params,
@@ -51,7 +51,7 @@ export default function ReviewerHistoryPage({
               {isLoading ? (
                 <tr>
                   <td colSpan={5} className="px-6 py-12 text-center">
-                    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
+                    <LogoLoader className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
                   </td>
                 </tr>
               ) : error ? (

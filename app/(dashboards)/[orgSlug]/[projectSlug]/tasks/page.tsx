@@ -1,5 +1,5 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { useState, use, useEffect } from "react";
 import { useTasks, useCreateTask, useLanguages } from "@/lib/api/queries";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ListChecks, Plus, Loader2, PlayCircle, Settings2, FileAudio } from "lucide-react";
+import { ListChecks, Plus, PlayCircle, Settings2, FileAudio } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -86,7 +86,7 @@ export default function TasksPage({ params }: { params: Promise<{ projectSlug: s
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -228,7 +228,7 @@ export default function TasksPage({ params }: { params: Promise<{ projectSlug: s
               </div>
               <DialogFooter>
                 <Button type="submit" disabled={createTask.isPending}>
-                  {createTask.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {createTask.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
                   Create Task
                 </Button>
               </DialogFooter>

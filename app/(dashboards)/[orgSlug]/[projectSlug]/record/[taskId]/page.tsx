@@ -1,12 +1,12 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { use, useState, useRef, useEffect, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useTaskDetail, useRequestUploadUrl, useCreateSubmission } from "@/lib/api/queries";
 import { useAudioRecorder, getBaseMimeType } from "@/hooks/useAudioRecorder";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowLeft, Mic, Square, Play, Pause, RotateCcw, Upload, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { ArrowLeft, Mic, Square, Play, Pause, RotateCcw, Upload, CheckCircle2, AlertCircle } from "lucide-react";
 
 type UploadStep = "idle" | "requesting-url" | "uploading" | "finalizing" | "done" | "error";
 
@@ -183,7 +183,7 @@ export default function RecordTaskPage({
   if (taskLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -342,7 +342,7 @@ export default function RecordTaskPage({
                 className="w-full sm:w-auto gap-2"
               >
                 {isUploading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <LogoLoader className="h-4 w-4 animate-spin" />
                 ) : (
                   <Upload className="h-4 w-4" />
                 )}

@@ -1,10 +1,10 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { use, useState } from "react";
 import { useContributorHistory } from "@/lib/api/queries";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Loader2, ClipboardCheck } from "lucide-react";
+import {  ClipboardCheck } from "lucide-react";
 
 export default function SubmissionsHistoryPage({
   params,
@@ -73,7 +73,7 @@ export default function SubmissionsHistoryPage({
               {isLoading ? (
                 <tr>
                   <td colSpan={4} className="px-6 py-12 text-center">
-                    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
+                    <LogoLoader className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
                   </td>
                 </tr>
               ) : error ? (

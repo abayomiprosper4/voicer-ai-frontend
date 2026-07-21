@@ -1,12 +1,12 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { useState, use } from "react";
 import { useProjectMembers, useInviteMember } from "@/lib/api/queries";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Users, Mail, Loader2, ShieldAlert, CheckCircle2, Clock } from "lucide-react";
+import { Users, Mail, ShieldAlert, CheckCircle2, Clock } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -36,7 +36,7 @@ export default function MembersPage({ params }: { params: Promise<{ projectSlug:
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -112,7 +112,7 @@ export default function MembersPage({ params }: { params: Promise<{ projectSlug:
               </div>
               <DialogFooter>
                 <Button type="submit" disabled={inviteMember.isPending}>
-                  {inviteMember.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {inviteMember.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
                   Send Invitation
                 </Button>
               </DialogFooter>

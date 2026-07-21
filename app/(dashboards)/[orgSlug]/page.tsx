@@ -1,5 +1,5 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { useState, use } from "react";
 import Link from "next/link";
 import { useOrganizations, useProjects, useCreateProject, useLanguages } from "@/lib/api/queries";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { FolderKanban, Plus, Loader2, ArrowRight } from "lucide-react";
+import { FolderKanban, Plus, ArrowRight } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
@@ -63,7 +63,7 @@ export default function OrganizationPage({ params }: { params: Promise<{ orgSlug
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -175,7 +175,7 @@ export default function OrganizationPage({ params }: { params: Promise<{ orgSlug
               </div>
               <DialogFooter>
                 <Button type="submit" disabled={createProject.isPending}>
-                  {createProject.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {createProject.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
                   Create Project
                 </Button>
               </DialogFooter>

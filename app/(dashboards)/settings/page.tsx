@@ -1,11 +1,11 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { useState, useEffect } from "react";
 import { useLanguages, useUserLanguages, useUpdateUserLanguages, useAuthMe } from "@/lib/api/queries";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Loader2, Plus, Trash2, CheckCircle2 } from "lucide-react";
+import {  Plus, Trash2, CheckCircle2 } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function GlobalSettingsPage() {
@@ -47,7 +47,7 @@ export default function GlobalSettingsPage() {
   if (langLoading || userLangLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -107,7 +107,9 @@ export default function GlobalSettingsPage() {
                         onValueChange={(val) => updateLanguage(idx, 'languageId', val || "")}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a language" />
+                          <SelectValue placeholder="Select a language">
+                            {globalLanguages?.find((gl: any) => gl.id === lang.languageId)?.name}
+                          </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                           {globalLanguages?.map((gl: any) => (
@@ -123,7 +125,12 @@ export default function GlobalSettingsPage() {
                         onValueChange={(val) => updateLanguage(idx, 'proficiency', val || "")}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select proficiency" />
+                          <SelectValue placeholder="Select proficiency">
+                            {lang.proficiency === 'BASIC' ? 'Basic' : 
+                             lang.proficiency === 'INTERMEDIATE' ? 'Intermediate' : 
+                             lang.proficiency === 'ADVANCED' ? 'Advanced' : 
+                             lang.proficiency === 'NATIVE' ? 'Native / Fluent' : ''}
+                          </SelectValue>
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="BASIC">Basic</SelectItem>
@@ -152,7 +159,7 @@ export default function GlobalSettingsPage() {
                 Saved successfully
               </div>
               <Button onClick={handleSave} disabled={updateLanguages.isPending || localLangs.length === 0}>
-                {updateLanguages.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {updateLanguages.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
                 Save Languages
               </Button>
             </div>

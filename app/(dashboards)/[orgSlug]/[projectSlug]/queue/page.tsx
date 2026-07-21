@@ -1,11 +1,11 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { use } from "react";
 import Link from "next/link";
 import { useReviewQueue } from "@/lib/api/queries";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Loader2, PlayCircle } from "lucide-react";
+import {  PlayCircle } from "lucide-react";
 
 export default function ReviewQueuePage({
   params,
@@ -39,7 +39,7 @@ export default function ReviewQueuePage({
               {isLoading ? (
                 <tr>
                   <td colSpan={6} className="px-6 py-12 text-center">
-                    <Loader2 className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
+                    <LogoLoader className="h-6 w-6 animate-spin text-muted-foreground mx-auto" />
                   </td>
                 </tr>
               ) : error ? (

@@ -1,5 +1,5 @@
 "use client";
-
+import { LogoLoader } from "@/components/ui/logo-loader";
 import { use, useState, useRef, useEffect, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useSubmissionDetail, useSubmitReview } from "@/lib/api/queries";
@@ -8,7 +8,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription }
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Play, Pause, Loader2, AlertCircle } from "lucide-react";
+import { ArrowLeft, Play, Pause, AlertCircle } from "lucide-react";
 
 export default function ReviewDetailPage({
   params,
@@ -112,7 +112,7 @@ export default function ReviewDetailPage({
   if (isLoading) {
     return (
       <div className="flex h-[400px] items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        <LogoLoader className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     );
   }
@@ -264,7 +264,7 @@ export default function ReviewDetailPage({
               Cancel
             </Button>
             <Button type="submit" disabled={submitReview.isPending}>
-              {submitReview.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {submitReview.isPending && <LogoLoader className="mr-2 h-4 w-4 animate-spin" />}
               Submit Review
             </Button>
           </CardFooter>

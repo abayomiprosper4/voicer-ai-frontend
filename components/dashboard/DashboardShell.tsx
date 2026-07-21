@@ -62,12 +62,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
               {/* Notification Badge Example */}
               <span className="absolute top-1.5 right-1.5 sm:top-1 sm:right-1 h-2 w-2 rounded-full bg-primary border-2 border-background"></span>
             </button>
-            <div className="flex items-center gap-2 sm:border-l border-border sm:pl-4">
+            <Link href="/settings" className="flex items-center gap-2 sm:border-l border-border sm:pl-4 hover:opacity-80 transition-opacity cursor-pointer">
               <UserCircle className="h-6 w-6 text-muted-foreground" />
-              <span className="text-sm font-medium hidden md:block">
+              <span className="text-sm font-medium hidden md:block hover:underline">
                 {isLoading ? "Loading..." : user?.firstName || user?.email || "User"}
               </span>
-            </div>
+            </Link>
           </div>
         </div>
 
