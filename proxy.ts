@@ -7,7 +7,7 @@ const authRoutes = ["/login"];
 // List of public routes that don't require authentication
 const publicRoutes = ["/login", "/"];
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
