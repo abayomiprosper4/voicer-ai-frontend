@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"console.log\\(require\\('@tailwindcss/postcss/package.json'\\).version\\)\")",
+      "Bash(node c:/tmp/tw-check.js)",
+      "Bash(node __twcheck.cjs)",
+      "Bash(del __twcheck.cjs)",
+      "Bash(node -e \"const L=require\\('lucide-react'\\); ['Home','ListChecks','MousePointerClick','Bell','ClipboardCheck','User','LogOut','PanelLeftClose','PanelLeftOpen','Mic','Upload','Play','Pause','Square','ArrowLeft','ArrowRight','RotateCcw','Check','Loader2','AlertCircle','ChevronLeft','ChevronRight'].forEach\\(n=>console.log\\(n.padEnd\\(20\\), n in L ? 'OK':'MISSING'\\)\\)\")"
+    ]
+  }
+}
