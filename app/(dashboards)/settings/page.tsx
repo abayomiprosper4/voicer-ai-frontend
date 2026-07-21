@@ -5,7 +5,7 @@ import { useLanguages, useUserLanguages, useUpdateUserLanguages, useAuthMe } fro
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {  Plus, Trash2, CheckCircle2 } from "lucide-react";
+import {  Plus, Trash2, CheckCircle2, LogOut } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function GlobalSettingsPage() {
@@ -61,9 +61,22 @@ export default function GlobalSettingsPage() {
 
       <div className="grid gap-6">
         <Card>
-          <CardHeader>
-            <CardTitle>Profile Information</CardTitle>
-            <CardDescription>Your personal identity on Voicer.</CardDescription>
+          <CardHeader className="flex flex-row items-start justify-between">
+            <div>
+              <CardTitle>Profile Information</CardTitle>
+              <CardDescription>Your personal identity on Voicer.</CardDescription>
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => {
+                localStorage.removeItem("token");
+                window.location.href = "/login";
+              }} 
+              className="gap-2 shrink-0 text-destructive hover:bg-destructive/10 hover:text-destructive"
+            >
+              <LogOut className="h-4 w-4" /> Sign out
+            </Button>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
